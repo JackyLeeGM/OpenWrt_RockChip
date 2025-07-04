@@ -12,6 +12,4 @@
 # 🌟鸣谢
 ### https://github.com/immortalwrt
 
-## ❤️赞助作者 ⬇️⬇️
-
-[![点击这里赞助我](https://img.shields.io/badge/点击这里赞助我-支持作者的项目-orange?logo=github)](https://wkdaily.cpolar.top/01)
+### https://github.com/wukongdaily/AutoBuildImmortalWrt
