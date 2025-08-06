@@ -46,9 +46,9 @@ if [ "$count" -eq 1 ]; then
     uci commit network
 elif [ "$count" -gt 1 ]; then
     # 提取第一个接口作为WAN
-    wan_ifname=$(echo "$ifnames" | awk '{print $1}')
+    # wan_ifname=$(echo "$ifnames" | awk '{print $1}')
     # 剩余接口保留给LAN
-    lan_ifnames=$(echo "$ifnames" | cut -d ' ' -f2-)
+    # lan_ifnames=$(echo "$ifnames" | cut -d ' ' -f2-)
     # 设置WAN接口基础配置
     uci set network.wan=interface
     # 提取第一个接口作为WAN
@@ -78,9 +78,9 @@ elif [ "$count" -gt 1 ]; then
     # 大家不能胡乱修改哦 比如有人修改为192.168.100.55 这是错误的理解 这个项目不能提前设置旁路地址
     # 旁路的设置分2类情况,情况一是单网口的设备,默认是DHCP模式，ip应该在上一级路由器里查看。之后进入web页在设置旁路。
     # 情况二旁路由如果是多网口设备，也应当用网关访问网页后，在自行在web网页里设置。总之大家不能直接在代码里修改旁路网关。千万不要徒增bug啦。
-    uci set network.lan.ipaddr='192.168.100.1'
+    uci set network.lan.ipaddr='192.168.6.1'
     uci set network.lan.netmask='255.255.255.0'
-    echo "set 192.168.100.1 at $(date)" >>$LOGFILE
+    echo "set 192.168.6.1 at $(date)" >>$LOGFILE
     # 判断是否启用 PPPoE
     echo "print enable_pppoe value=== $enable_pppoe" >>$LOGFILE
     if [ "$enable_pppoe" = "yes" ]; then
