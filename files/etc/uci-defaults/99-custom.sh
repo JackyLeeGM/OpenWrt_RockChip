@@ -45,14 +45,14 @@ if [ "$count" -eq 1 ]; then
     uci delete network.lan.dns 
     uci commit network
 elif [ "$count" -gt 1 ]; then
-    # 提取第一个接口作为WAN
-    wan_ifname=$(echo "$ifnames" | awk '{print $1}')
-    # 剩余接口保留给LAN
-    lan_ifnames=$(echo "$ifnames" | cut -d ' ' -f2-)
+    # 提取第一个接口作为LAN
+    lan_ifname=$(echo "$ifnames" | awk '{print $1}')
+    # 剩余接口保留给WAN
+    wan_ifnames=$(echo "$ifnames" | cut -d ' ' -f2-)
     # 设置WAN接口基础配置
     uci set network.wan=interface
-    # 提取第一个接口作为WAN
-    uci set network.wan.device="$wan_ifname"
+    # 提取第一个接口作为LAN
+    uci set network.lan.device="$lan_ifname"
     # WAN接口默认DHCP
     uci set network.wan.proto='dhcp'
     # 设置WAN6绑定网口eth0
