@@ -60,9 +60,6 @@ PACKAGES="$PACKAGES luci-theme-argon"
 PACKAGES="$PACKAGES luci-app-argon-config"
 PACKAGES="$PACKAGES luci-i18n-argon-config-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn"
-PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
-PACKAGES="$PACKAGES luci-app-openclash"
-PACKAGES="$PACKAGES luci-i18n-homeproxy-zh-cn"
 # 判断是否需要编译 Docker 插件
 if [ "$INCLUDE_DOCKER" = "yes" ]; then
     PACKAGES="$PACKAGES luci-i18n-dockerman-zh-cn"
@@ -75,6 +72,36 @@ PACKAGES="$PACKAGES luci-i18n-dufs-zh-cn"
 # ======== shell/custom-packages.sh =======
 # 合并imm仓库以外的第三方插件
 PACKAGES="$PACKAGES $CUSTOM_PACKAGES"
+# 以下悟空默认插件后 再次添加的插件
+PACKAGES="$PACKAGES luci-i18n-cpufreq-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-openlist-zh-cn"
+# 服务——FileBrowser 用户名admin 密码admin
+PACKAGES="$PACKAGES luci-i18n-filebrowser-go-zh-cn"
+# 增加几个必备组件 方便用户安装iStore
+PACKAGES="$PACKAGES fdisk"
+PACKAGES="$PACKAGES script-utils"
+PACKAGES="$PACKAGES luci-i18n-samba4-zh-cn"
+# 添加ax网卡和mt792x网卡驱动包测试是否可行
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-iwlwifi"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES iwlwifi-firmware-ax200"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES iwlwifi-firmware-ax201"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES iwlwifi-firmware-ax210"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES mt7921bt-firmware"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt7921u"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt7921-common"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt7921-firmware"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES mt7922bt-firmware"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt7922-firmware"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt76-core"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt76-connac"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt792x-common"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt76-usb"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt792x-usb"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-hwmon-core"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mmc"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt76-sdio"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt7921s"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES kmod-mt7921e"
 
 # 构建镜像
 echo "$(date '+%Y-%m-%d %H:%M:%S') - Building image with the following packages:"
