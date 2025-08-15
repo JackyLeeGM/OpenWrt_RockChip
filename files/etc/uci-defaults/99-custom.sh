@@ -1,7 +1,7 @@
 #!/bin/sh
 # 99-custom.sh 就是immortalwrt固件首次启动时运行的脚本 位于固件内的/etc/uci-defaults/99-custom.sh
 # Log file for debugging
-LOGFILE="/etc/config/uci-defaults-log.txt"
+LOGFILE="/tmp/uci-defaults-log.txt"
 echo "Starting 99-custom.sh at $(date)" >>$LOGFILE
 # 设置默认防火墙规则，方便虚拟机首次访问 WebUI
 uci set firewall.@zone[1].input='ACCEPT'
@@ -45,17 +45,19 @@ if [ "$count" -eq 1 ]; then
     uci delete network.lan.dns 
     uci commit network
 elif [ "$count" -gt 1 ]; then
-    # 提取第一个接口作为WAN
-    wan_ifname=$(echo "$ifnames" | awk '{print $1}')
-    # 剩余接口保留给LAN
-    lan_ifnames=$(echo "$ifnames" | cut -d ' ' -f2-)
+    # 提取第二个接口作为WAN
+    wan_ifname=$(echo "$ifnames" | awk '{print $2}')
+    # 第一个接口和剩余接口保留给LAN
+    first_lan_ifname=$(echo "$ifnames" | awk '{print $1}')
+    remaining_lan_ifnames=$(echo "$ifnames" | cut -d ' ' -f3-)
+    lan_ifnames="$first_lan_ifname $remaining_lan_ifnames"
     # 设置WAN接口基础配置
     uci set network.wan=interface
-    # 提取第一个接口作为WAN
+    # 提取第二个接口作为WAN
     uci set network.wan.device="$wan_ifname"
     # WAN接口默认DHCP
     uci set network.wan.proto='dhcp'
-    # 设置WAN6绑定网口eth0
+    # 设置WAN6绑定网口eth1
     uci set network.wan6=interface
     uci set network.wan6.device="$wan_ifname"
     # 更新LAN接口成员
@@ -74,7 +76,7 @@ elif [ "$count" -gt 1 ]; then
     fi
     # LAN口设置静态IP
     uci set network.lan.proto='static'
-    # 多网口设备 支持修改为别的管理后台地址 在Github Action 的UI上自行输入即可 
+    # 多网口设备 支持修改为别的管理后台地址 在Github Action 的UI上自行输入即可
     uci set network.lan.netmask='255.255.255.0'
     # 设置路由器管理后台地址
     IP_VALUE_FILE="/etc/config/custom_router_ip.txt"
@@ -84,8 +86,10 @@ elif [ "$count" -gt 1 ]; then
         uci set network.lan.ipaddr=$CUSTOM_IP
         echo "custom router ip is $CUSTOM_IP" >> $LOGFILE
     else
-        uci set network.lan.ipaddr='192.168.100.1'
-        echo "default router ip is 192.168.100.1" >> $LOGFILE
+        uci set network.lan.ipaddr='192.168.6.1'
+        # 开启强制DHCP服务
+        uci set dhcp.lan.force='1'
+        echo "default router ip is 192.168.6.1" >> $LOGFILE
     fi
 
 
@@ -164,8 +168,8 @@ uci set dropbear.@dropbear[0].Interface=''
 uci commit
 
 # 设置编译作者信息
-FILE_PATH="/etc/openwrt_release"
-NEW_DESCRIPTION="Packaged by wukongdaily"
-sed -i "s/DISTRIB_DESCRIPTION='[^']*'/DISTRIB_DESCRIPTION='$NEW_DESCRIPTION'/" "$FILE_PATH"
+# FILE_PATH="/etc/openwrt_release"
+# NEW_DESCRIPTION="Packaged by wukongdaily"
+# sed -i "s/DISTRIB_DESCRIPTION='[^']*'/DISTRIB_DESCRIPTION='$NEW_DESCRIPTION'/" "$FILE_PATH"
 
 exit 0
