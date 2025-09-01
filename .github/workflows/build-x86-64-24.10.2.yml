@@ -6,14 +6,14 @@ on:
       custom_router_ip:
         description: "请设置路由器的管理地址(仅对多网口路由器有效) 格式:192.168.x.1 或 10.x.x.1"
         required: true
-        default: "192.168.100.1"
+        default: "192.168.6.1"
       profile:
         description: '请输入要编译固件大小 单位(MB)'
         required: true
-        default: '1024'
+        default: '2048'
       enable_store:
         description: "集成 store 商店"
-        required: false
+        required: true
         type: boolean
         default: true
       include_docker:
@@ -66,7 +66,7 @@ jobs:
               exit 1
             fi
           fi
-      
+
       - name: Enable Store integration
         run: |
           if [ "${{ github.event.inputs.enable_store }}" == "true" ]; then
@@ -100,11 +100,12 @@ jobs:
       - name: Create info
         run: |
           cat > ${{ github.workspace }}/router-info.md <<EOF
-          ## 📡 路由器后台信息
+          ## 📡 固件默认配置【必读】
 
-          - 🏠 **后台地址**: ${{ github.event.inputs.custom_router_ip }}
-          - 👤 **用户名**: root
-          - 🔑 **密码**: 无
+           **管理IP**: ${{ github.event.inputs.custom_router_ip }}
+           **用户名**: root
+           **密码**: 无
+           **X86网口**: ETH0为WAN，其余网口均为LAN
           EOF
 
           if [ "${{ github.event.inputs.include_docker }}" == "yes" ]; then
@@ -117,7 +118,7 @@ jobs:
       - name: Upload ImmortWrt as release assets
         uses: softprops/action-gh-release@v2.2.1
         with:
-          tag_name: Autobuild-x86-64
+          tag_name: ImmortWrt-X86-64
           body_path: ${{ github.workspace }}/router-info.md
           files: |
             ${{ github.workspace }}/bin/targets/x86/64/*squashfs-combined-efi.img.gz
