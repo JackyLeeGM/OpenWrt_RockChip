@@ -52,14 +52,14 @@ on:
           - xunlong_orangepi-r1-plus
           - xunlong_orangepi-r1-plus-lts
         required: true
-        default: 'friendlyarm_nanopi-r3s'
+        default: 'friendlyarm_nanopi-r5c'
       rootfs_partsize:
         description: '设置软件包大小 单位(MB)'
         required: true
-        default: '1024'
+        default: '2048'
       enable_store:
         description: "集成 store 商店"
-        required: false
+        required: true
         type: boolean
         default: true
       include_docker:
