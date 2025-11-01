@@ -95,6 +95,8 @@ elif [ "$count" -gt 1 ]; then
 
     # LAN口设置静态IP
     uci set network.lan.proto='static'
+    # 开启强制DHCP服务
+    uci set dhcp.lan.force='1'
     # 多网口设备 支持修改为别的管理后台地址 在Github Action 的UI上自行输入即可 
     uci set network.lan.netmask='255.255.255.0'
     # 设置路由器管理后台地址
@@ -105,8 +107,8 @@ elif [ "$count" -gt 1 ]; then
         uci set network.lan.ipaddr=$CUSTOM_IP
         echo "custom router ip is $CUSTOM_IP" >> $LOGFILE
     else
-        uci set network.lan.ipaddr='192.168.100.1'
-        echo "default router ip is 192.168.100.1" >> $LOGFILE
+        uci set network.lan.ipaddr='192.168.6.1'
+        echo "default router ip is 192.168.6.1" >> $LOGFILE
     fi
 
     # PPPoE设置
