@@ -8,12 +8,11 @@
 
 
 # 🌟鸣谢
-https://github.com/immortalwrt
-https://github.com/ophub/flippy-openwrt-actions
-https://github.com/ophub/amlogic-s9xxx-openwrt
-https://github.com/sirpdboy
-https://github.com/wukongdaily/ib-overlay
-
+### https://github.com/immortalwrt
+### https://github.com/ophub/flippy-openwrt-actions
+### https://github.com/ophub/amlogic-s9xxx-openwrt
+### https://github.com/sirpdboy
+### https://github.com/wukongdaily/ib-overlay
 
 
 
