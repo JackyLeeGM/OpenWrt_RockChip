@@ -7,6 +7,13 @@
 
 网口：ETH0为WAN，其余网口均为LAN
 
+# 🌟鸣谢
+### https://github.com/immortalwrt
+### https://github.com/ophub/flippy-openwrt-actions
+### https://github.com/ophub/amlogic-s9xxx-openwrt
+### https://github.com/sirpdboy
+### https://github.com/wukongdaily/ib-overlay
+
 #### 🍭引用和项目参考的仓库
 - https://github.com/wukongdaily/RunFilesBuilder
 - https://github.com/wukongdaily/store
