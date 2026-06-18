@@ -25,8 +25,6 @@
 
 
 
-<details>
-<summary><h2>🍭相关引用</h2></summary>
 
 #### 🍭引用和项目参考的仓库
 - https://github.com/wukongdaily/RunFilesBuilder
